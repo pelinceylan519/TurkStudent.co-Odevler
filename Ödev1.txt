@@ -1,0 +1,25 @@
+Görevler
+a. Belirli Kolonları Seçme
+--Çalışanların adı, soyadı ve maaş kolonlarını çıktı olarak veren SQL komutları
+select FirstName, LastName, Salary from Employees
+--Kodda öncelikle tablodan almak istediğimiz bilgileri içeren kolonların adını select komutu ile kullanır ve sonra o kolonların ait olduğu tablonun adını yazarak koda verdiğim tablodan verdiğim kolon bilgilerini seç ve ekrana yazdır demiş oluruz.
+
+b. DISTINCT Komutu ile Tekrarları Önleme
+--Çalışanların çalıştığı departmanların benzersiz olarak sıralanması
+select distinct departmentid from employees
+--Bu ifade ile veri tabanımıza employees tablosunda kaç çeşit departman olduğunu yazdırmasını söyleriz ve kod birbirinden farklı id'e sahip olan departmanid çeşitlerini ekrana yazdırır.
+
+c. Belirli Bir Departmana Ait Çalışanların Listelenmesi
+--Çalışanlardan sadece IT departmanında (verilen kodların tablosunda IT departmanı için departmanid = 2 olarak aldım) çalışanların seçilmesi
+select * from employees where departmentid = 2;
+--
+
+d. Maaşa Göre Sıralama
+--
+select firstname, lastname, salary from employees order by salary desc;
+--
+
+e. Kolonları Birleştirme(Concatenation)
+--
+select firstname || ' ' || lastname as firstandlastname from employees ;
+--
