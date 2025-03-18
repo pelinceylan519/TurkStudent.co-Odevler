@@ -1,0 +1,57 @@
+SORU 1) 
+--Invoice tablosunda ki tüm değerleri null olan kayıtları sayma
+SELECT COUNT (*)
+FROM invoice
+WHERE invoice_id IS NULL
+  AND customer_id IS NULL
+  AND invoice_date IS NULL
+  AND billing_address IS NULL
+  AND billing_city IS NULL
+  AND billing_state IS NULL
+  AND billing_country IS NULL
+  AND billingpostal_code IS NULL
+  AND total IS NULL;
+-- COUNT (*) ifadesi where komutu ile verilen şartı sağlayan tüm satırları sayar. WHERE komutu ile verilen şartlar ise tek tek tabloda ki tüm sütunların değerinin aynı anda null olup olmadığını kontrol eder.
+
+SORU 2)
+--Total değerlerinin iki katını görme
+SELECT total * 2 AS new_total
+FROM invoice;
+-- Tüm total satırında ki değerleri iki katına çıkarır ve bu değerler ile new_total adında yeni bir sütun yapar ve yeni sütunu ekerana yazdırır.
+
+--Eski versiyonları ile birlikte karşılaştırma
+SELECT total AS old_total, total *2 AS new_total
+FROM invoice; 
+-- total sütun değerleri eski total olarak adlandırır ve total değerlerini iki katına çıkararak bu değerler ile yeni total sütunu yaparak ekrana yazdırır.
+
+--Yeni versiyona ait kolona göre büyükten küçüğe doğru sıralama
+SELECT total AS old_total, total *2 AS new_total
+FROM invoice
+ORDER BY new_total DESC;
+-- total değerlerinin yazdığı sütunu eski total olarak adlandırır ve total değerlerinin iki katını içeren yeni total sütunu oluşturur ve bu yeni sütunu büyükten küçüğe doğru sıralayarak ekrana yazdırır.
+
+SELECT invoice_id, total AS old_total, 
+COALESCE(total * 2, 0) AS new_total
+FROM invoice
+ORDER BY new_total DESC;
+--Bu komut ise total değerinin sıralanması için COALESCE komutu ile kontrolü sağlar. Burada Coalesce fonksiyonu tüm total değerlerinin iki katını kontrol eder ve null olan değeri 0 olarak yazar. Bu sayede sıralamada tamamen sayısal değerler olur ve sorun yaşanmaz.
+
+SORU 3)
+--Açık adres yazma
+SELECT 
+LEFT(billing_address, 3) || RIGHT(billing_address, 4) AS "acik_adres"
+FROM invoice;
+--invoice tablosunda billing_address sütununda ki değerlerin soldan ilk 3 hanesini ve sağdan son 4 hanesini alarak ortaya boşluk koyup birleştirir ve bu yeni değerleri acik_adres olarak adlandırılan yeni sütuna yazar.
+
+--Açık adresi filtreleme
+WHERE DATE_PART('year', invoice_date) = 2013
+AND DATE_PART('month', invoice_date) = 8
+-- Bu sorgu parçası açık adres sütunu oluştururken filtreleme yapmamızı sağlar. Filtreleme işlemini tablonun bir diğer sütunu olan invoice_date sütununu kullanarak yaparız. DATE_PART fonksiyonu ile sütunda ki tarihler ay ve yıl olarak parçalanmayı sağlar. Parçalamadan sonra invoice_date sütununda ayı 8. ay ve yılı 2013 olan verilerin adresi alınarak açık adres oluşturulmasını sağlar.
+
+SELECT 
+LEFT(billing_address, 3) || RIGHT(billing_address, 4) AS "acik_adres"
+FROM invoice
+WHERE DATE_PART('year', invoice_date) = 2013
+AND DATE_PART('month', invoice_date) = 8
+-- Açık adres sütunu oluşturma ve açık adres sütununu, invoince_date sütununu kullanarak filtreleme işlemi sorgusu.
+
