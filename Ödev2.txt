@@ -1,5 +1,5 @@
 SORU 1) 
---Invoice tablosunda ki tüm değerleri null olan kayıtları sayma (Çıktı = 0)
+--Invoice tablosunda ki tüm değerleri null olan kayıtları sayma (Row sayısı = Ln 12, Col 1)
 SELECT COUNT (*)
 FROM invoice
 WHERE invoice_id IS NULL
