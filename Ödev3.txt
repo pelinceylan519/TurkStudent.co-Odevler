@@ -1,0 +1,25 @@
+SORU 1)
+--Bu sorgu, 2009 yılında oluşturulmuş ve "USA" ülkesine ait olan tüm faturaların toplam tutarını döndürecektir.
+SELECT SUM(invoice.total) AS total_amount
+FROM invoice
+WHERE invoice.billing_city = 'USA'
+AND DATE_PART ('year', invoice.invoice_date) = 2009;
+-- Bu sorgu, "invoice" tablosunda "billing_city" sütunu "USA" olan ve "invoice_date" sütunu 2009 yılına ait olan tüm faturaların toplamını hesaplar. SUM() fonksiyonu, belirli bir koşula uyan kayıtların toplamını almak için kullanılır. Yıl bilgisi DATE_PART('year', ) fonksiyonu ile elde edilir.
+
+SORU 2)
+--Bu sorgu, her bir parça (track) ile ilgili playlist bilgilerini listeler. Yani, hangi parça hangi playlist'e aitse, bu bilgiyi gösterir.
+SELECT t.track_id, t.name AS track_name, p.name AS playlist_name
+FROM track t 
+JOIN playlisttrack pt ON t.track_id = pt.track_id
+JOIN playlist p ON pt.playlist_id = p.playlist_id;
+--Bu sorgu, "track", "playlisttrack" ve "playlist" tablolarını birleştirerek (JOIN) her bir parçanın (track) ait olduğu playlistin adını getirir. İlk olarak "track" ve "playlisttrack" tabloları track_id üzerinden birleştirilir, ardından "playlisttrack" ve "playlist" tabloları playlist_id üzerinden birleştirilir. Sonuç olarak, parça adı ve playlist adı gösterilir.
+
+SORU 3)
+--Bu sorgu, "Let There Be Rock" albümüne ait tüm parçaları (track), sanatçı bilgisi ile birlikte ve en uzun süreli parçadan en kısa süreliye doğru sıralayarak döndürecektir.
+SELECT t.name AS track_name, a.title AS album_title, ar.name AS artist_name, t.milliseconds
+FROM track t
+JOIN album a ON t.album_id = a.album_id
+JOIN artist ar ON a.artist_id = ar.artist_id
+WHERE a.title = 'Let There Be Rock'
+ORDER BY t.milliseconds DESC;
+--Bu sorgu, "track", "album" ve "artist" tablolarını birleştirerek "Let There Be Rock" adlı albüme ait tüm parçaları ve sanatçı bilgilerini getirir. "track" ve "album" tabloları album_id üzerinden, "album" ve "artist" tabloları ise artist_id üzerinden birleştirilir. Sonuçlar, parça süresi (milliseconds) büyükten küçüğe sıralanır. "WHERE" koşuluyla albüm adı "Let There Be Rock" olanlar filtrelenir.
